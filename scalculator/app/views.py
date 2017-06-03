@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from oauth2client import client, crypt
 # Create your views here.
 
 
@@ -9,7 +10,7 @@ this page has two types of login:
 2. login with gmail.
 '''
 def index(request):
-    return HttpResponse("login page.")
+    return render(request, 'app/login.html')
 
 '''
 an IITG student who has logged in using gmail
@@ -18,7 +19,7 @@ with webmail ID and password in this page.
 
 this verification is needed only once.
 '''
-def verification(request):
+def wverify(request):
     return HttpResponse("iitg verification.")
 
 '''
@@ -31,8 +32,8 @@ def student_details(request):
 all scholarships a student is eligible to
 apply are shown in this page.
 '''
-def eligible_scholarships(request):
-    return HttpResponse("scholarships you can apply.")
+def eligible(request):
+    return render(request, 'app/eligible.html')
 
 '''
 a student can mark some scholarships that
@@ -41,3 +42,17 @@ those scholarships are shown in this page.
 '''
 def your_scholarships(request):
     return HttpResponse("marked scholarships.")
+
+'''
+this is not a webpage but it verifies the gmail login
+'''
+def gverify(request):
+    token = request.POST.get("idtoken", "")
+    text = "me"
+    try:
+        idinfo = client.verify_id_token(token, "541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com")
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise crypt.AppIdentityError("Wrong issuer.")
+    except crypt.AppIdentityError:
+        text = "none"
+    return HttpResponse(text)

@@ -2,11 +2,14 @@
 <html>
 <head>
 <title>Login</title>
+
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
 </head>
 <body>
-<meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
-<h1>login with gmail</h1>
+<center>
+
+<h1 >login with gmail</h1>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 {% csrf_token %}
 <script>
@@ -22,6 +25,7 @@
         xhr.send('idtoken=' + id_token);
     }
 </script>
+
 <h1>login with webmail</h1>
 <a href="#" onclick="signOut();">Sign out</a>
 <script>
@@ -32,5 +36,6 @@
         });
     }
 </script>
+    </center>
 </body>
 </html>

@@ -26,11 +26,28 @@ class Person(models.Model):
         ('Y', 'yes'),
         ('N', 'no'),
     )
-    FAMILY_INCOME=(
-        ('B15','Below Rs.1,50,000'),
-        ('15T25','Rs. 1,50,000 to Rs. 2,50,000'),
-        ('25T35','Rs. 2,50,000 to Rs. 3,50,000'),
-        ('35T45','Rs. 3,50,000 to Rs. 4,50,000'),
-        ('45A','Rs. 4,50,000 - Above'),
+    family_income = models.IntegerField(max_length=30)
+    CATEGORY = (
+        ('GEN','General'),
+        ('SC','Scheduled Class'),
+        ('ST','Scheduled Tribe'),
+        ('PWD','Person With Disability'),
+        ('OBC', 'Other Backward Class'),
+    )
+    PROGRAMME = (
+        ('P','Preparatory'),
+        ('B1','B.Tech 1st Year'),
+        ('B2','B.Tech 2nd Year'),
+        ('B3','B.Tech 3rd Year'),
+        ('B4','B.Tech 4th Year'),
+        ('MA1','MA 1st Year'),
+        ('MA2','MA 2nd Year'),
+        ('MS1','MSc 1st Year'),
+        ('MS2','MSc 2nd Year'),
+    )
+    current_cpi = models.IntegerField(max_length=5)
+    CITIZEN_INDIA = (
+        ('Y','Yes'),
+        ('N','No'),
     )
     marked_scholarships = models.ManyToManyField(Scholarship)

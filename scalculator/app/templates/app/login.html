@@ -4,9 +4,10 @@
 <title>Login</title>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
 </head>
 <body>
-<meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
+<center>
 <h1>login with gmail</h1>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 {% csrf_token %}
@@ -52,5 +53,6 @@
         });
     }
 </script>
+    </center>
 </body>
 </html>

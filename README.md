@@ -3,15 +3,14 @@
 ## scalculator
 A website to find scholarships.
 
-###### url for login page
-> http://localhost:8000/app/login
+###### url for login page > http://localhost:8000/app/login
 
 ## app
 Django project *scalculator* has only one app named *app*
 
-###### Database
-Has 2 tables one for scholarships and one for users in
-> scalculator/app/models.py
+###### Database > scalculator/app/models.py
+Has 2 tables
+1. scholarship
+2. user info
 
-###### Webpages
-> scalculator/app/views.py
+###### Webpages > scalculator/app/views.py

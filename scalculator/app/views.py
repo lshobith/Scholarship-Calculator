@@ -46,13 +46,14 @@ this is not a webpage but it verifies the gmail login
 '''
 def gverify(request):
     token = request.POST['idtoken']
-    
+    text = ''
     try:
         idinfo = client.verify_id_token(token, "541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com")
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise crypt.AppIdentityError("Wrong issuer.")
     except crypt.AppIdentityError:
-        # Invalid token TODO
-        pass
-    userid = idinfo['sub']
-    return HttpResponse("me")
+        text = 'Sign in failed'
+    else:
+        request.session['userid'] = idinfo['sub']
+        text = 'Signed in as: ' + idinfo['sub']
+    return HttpResponse(text)

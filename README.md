@@ -5,8 +5,6 @@ A website to find scholarships.
 
 ###### url for login page
 > http://localhost:8000/app/login
-or
-> http://127.0.0.1:8000/app/login
 
 ## app
 Django project *scalculator* has only one app named *app*

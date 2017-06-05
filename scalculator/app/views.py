@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
-# Create your views here.
-
 
 '''
 this page has two types of login:
@@ -47,12 +45,14 @@ def your_scholarships(request):
 this is not a webpage but it verifies the gmail login
 '''
 def gverify(request):
-    token = request.POST.get("idtoken", "")
-    text = "me"
+    token = request.POST['idtoken']
+    
     try:
         idinfo = client.verify_id_token(token, "541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com")
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise crypt.AppIdentityError("Wrong issuer.")
     except crypt.AppIdentityError:
-        text = "none"
-    return HttpResponse(text)
+        # Invalid token TODO
+        pass
+    userid = idinfo['sub']
+    return HttpResponse("me")

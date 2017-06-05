@@ -3,6 +3,7 @@
 <head>
 <title>Login</title>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
@@ -10,14 +11,34 @@
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 {% csrf_token %}
 <script>
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+<script>
     function onSignIn(googleUser) {
         var id_token = googleUser.getAuthResponse().id_token;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'gverify');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var csrftoken = getCookie('csrftoken');
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
         xhr.onload = function () {
             console.log('Signed in as: ' + xhr.responseText);
-            //document.location.href = 'eligible'; TODO
+            //document.location.href = 'eligible';
         };
         xhr.send('idtoken=' + id_token);
     }

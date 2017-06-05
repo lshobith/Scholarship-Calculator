@@ -16,5 +16,4 @@ Has 2 tables one for scholarships and one for users in
 > scalculator/app/models.py
 
 ###### Webpages
-Has 5 views
 > scalculator/app/views.py

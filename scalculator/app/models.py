@@ -21,7 +21,7 @@ class Person(models.Model):
         ('F', 'Female'),
     )
     IITG_STUDENT = (
-        ('Y', 'yes')
-        ('N', 'no')
+        ('Y', 'yes'),
+        ('N', 'no'),
     )
     marked_scholarships = models.ManyToManyField(Scholarship)

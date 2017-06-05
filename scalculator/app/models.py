@@ -14,7 +14,7 @@ table that contains details of the user.
 '''
 class Person(models.Model):
     person_name = models.CharField(max_length=100)
-    #gmail_ID = models. TODO
+    #gmail_id = models. TODO
     birth_date = models.DateField()
     GENDER = (
         ('M', 'Male'),

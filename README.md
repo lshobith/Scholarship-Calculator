@@ -10,10 +10,10 @@ A website to find scholarships.
 Django project *scalculator* has only one app named *app*
 
 ###### Database
-> scalculator/app/models.py
 Has 2 tables
 1. scholarship
 2. user info
+> scalculator/app/models.py
 
 ###### Webpages
 > scalculator/app/views.py

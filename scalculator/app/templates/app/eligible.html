@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Eligible</title>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
-</head>
-<body>
-<h1>Signed in</h1>
-<a href="login" onclick="signOut();">Sign out</a>
-<script>
-    function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            console.log('User signed out.');
-        });
-    }
-</script>
-</body>
+    <head>
+        <title>Eligible</title>
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+        <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
+    </head>
+    <body>
+        <h1>Signed in</h1>
+        <button id="signOut" style="display:none" onclick="signOut();">Sign out</button>
+        <a href="wverify">webmail verification</a>
+        <a href="saved">saved scholarships</a>
+        <a href="profile">profile</a>
+        <script>
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                    document.location.href = 'login';
+                });
+            }
+            function onLoad() {
+                gapi.load('auth2', function() {
+                    gapi.auth2.init();
+                });
+                var signOutButton = document.getElementById('signOut');
+                signOutButton.style.display = 'block';
+                console.log('sign out is shown');
+            }
+        </script>
+    </body>
 </html>

@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1>Signed in</h1>
-        <button onclick="signOut();">Sign out</button>
+        <button id="signOut" style="display:none" onclick="signOut();">Sign out</button>
         <script>
             function signOut() {
                 var auth2 = gapi.auth2.getAuthInstance();
@@ -17,9 +17,12 @@
                 });
             }
             function onLoad() {
-              gapi.load('auth2', function() {
-                gapi.auth2.init();
-              });
+                gapi.load('auth2', function() {
+                    gapi.auth2.init();
+                });
+                var signOutButton = document.getElementById('signOut');
+                signOutButton.style.display = 'block';
+                console.log('sign out is shown');
             }
         </script>
     </body>

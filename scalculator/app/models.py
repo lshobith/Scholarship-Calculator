@@ -20,9 +20,9 @@ table that contains details of the user.
 
 
 class Person(models.Model):
-    person_name = models.CharField(max_length=100)
-    #gmail_id = models. TODO
-    birth_date = models.DateField()
+    person_name = models.CharField(max_length=100, null=True)
+    gmail_id = models.CharField(max_length=50, primary_key=True)
+    birth_date = models.DateField(null=True)
     GENDER = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -34,7 +34,7 @@ class Person(models.Model):
         ('N', 'no'),
     )
     IITG_student = models.CharField(max_length=1, choices=IITG_STUDENT, default='N')
-    family_income = models.IntegerField(default="")
+    family_income = models.IntegerField(default=0)
     CATEGORY = (
         ('GEN','General'),
         ('SC','Scheduled Class'),
@@ -55,7 +55,7 @@ class Person(models.Model):
         ('MS2','MSc 2nd Year'),
     )
     programme = models.CharField(max_length=3, choices=PROGRAMME, default='P')
-    current_cpi = models.DecimalField(default='', decimal_places=2,max_digits=4)
+    current_cpi = models.DecimalField(default=0.00, decimal_places=2,max_digits=4)
     CITIZEN_INDIA = (
         ('Y','Yes'),
         ('N','No'),

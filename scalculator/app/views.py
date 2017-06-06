@@ -7,7 +7,7 @@ this page has two types of login:
 1. login with webmail.
 2. login with gmail.
 '''
-def index(request):
+def login(request):
     return render(request, 'app/login.html')
 
 '''
@@ -18,19 +18,28 @@ with webmail ID and password in this page.
 this verification is needed only once.
 '''
 def wverify(request):
-    return HttpResponse("iitg verification.")
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+
+    return render(request, 'app/wverify.html')
 
 '''
 students enter their details in this page.
 '''
-def student_details(request):
-    return HttpResponse("enter your details.")
+def profile(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+
+    return render(request, 'app/profile.html')
 
 '''
 all scholarships a student is eligible to
 apply are shown in this page.
 '''
 def eligible(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+
     return render(request, 'app/eligible.html')
 
 '''
@@ -38,8 +47,11 @@ a student can mark some scholarships that
 he/she is interested in.
 those scholarships are shown in this page.
 '''
-def your_scholarships(request):
-    return HttpResponse("marked scholarships.")
+def saved(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+
+    return render(request, 'app/saved.html')
 
 '''
 this is not a webpage but it verifies the gmail login

@@ -1,5 +1,15 @@
 # Scholarship-Calculator
 
+## requirements
+
+###### Django 1.11
+install it with
+> pip install django
+
+###### oauth2client
+install it with
+> pip install --upgrade oauth2client
+
 ## scalculator
 A website to find scholarships.
 

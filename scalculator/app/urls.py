@@ -19,4 +19,7 @@ urlpatterns = [
 
     # this page has information about the user
     url(r'^profile$', views.profile, name='profile'),
+
+    # this function is for logout
+    url(r'^glogout$', views.glogout, name='glogout'),
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
+from app.models import Person
 
 '''
 this page has two types of login:
@@ -54,6 +55,18 @@ def saved(request):
     return render(request, 'app/saved.html')
 
 '''
+this is for logout
+'''
+def glogout(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("You're not logged in!")
+    try:
+        del request.session['userid']
+    except KeyError:
+        pass
+    return HttpResponse("You're logged out.")
+
+'''
 this is not a webpage but it verifies the gmail login
 '''
 def gverify(request):
@@ -68,4 +81,8 @@ def gverify(request):
     else:
         request.session['userid'] = idinfo['sub']
         text = 'Signed in as: ' + idinfo['sub']
+        if not Person.objects.filter(gmail_id=request.session['userid']).exists():
+            new_user = Person(gmail_id=request.session['userid'])
+            new_user.save()
+            text = '(new user)' + text
     return HttpResponse(text)

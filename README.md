@@ -3,13 +3,11 @@
 ## requirements
 
 ###### Django 1.11
-install it with
 ```bash
 $ pip install django
 ```
 
 ###### oauth2client
-install it with
 ```bash
 $ pip install --upgrade oauth2client
 ```

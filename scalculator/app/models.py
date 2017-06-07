@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 
@@ -10,6 +11,11 @@ table that contains scholarships and their details.
 
 class Scholarship(models.Model):
     scholarship_name = models.CharField(max_length=1000)
+    IITG_SCHOLARSHIP = (
+        ('Y', 'Yes'),
+        ('N', 'No'),
+    )
+    iitg_scholarship = models.CharField(max_length=1, choices=IITG_SCHOLARSHIP, default='N')
     '''minimum_cpi = models.DecimalField(max_digits=4, decimal_places=2, default='')'''
 
     def __str__(self):
@@ -66,3 +72,13 @@ class Person(models.Model):
     def __str__(self):
         return self.person_name + '-' + self.gender
     marked_scholarships = models.ManyToManyField(Scholarship)
+
+'''
+form for Person class
+'''
+class PersonForm(ModelForm):
+    class Meta:
+        model = Person
+
+        # fields in Person class except 'IITG_student', 'gmail_id' and 'marked_scholarships' can be present
+        fields = ('person_name', 'birth_date', 'gender', 'family_income', 'category', 'programme', 'current_cpi', 'citizen_india')

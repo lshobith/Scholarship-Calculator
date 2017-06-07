@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
-from app.models import Person
+from app.models import Person, PersonForm
 
 '''
 this page has two types of login:
@@ -30,8 +30,15 @@ students enter their details in this page.
 def profile(request):
     if not request.session.__contains__('userid'):
         return HttpResponse("you are not logged in!")
+    person = Person.objects.get(gmail_id=request.session['userid'])
+    if request.method == 'POST':
+        form = PersonForm(request.POST, instance=person)
+        if form.is_valid():
+            form.save()
+    else:
+        form = PersonForm(instance=person)
 
-    return render(request, 'app/profile.html')
+    return render(request, 'app/profile.html', {'form': form})
 
 '''
 all scholarships a student is eligible to

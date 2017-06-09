@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
-from app.models import Person, PersonForm
+from .models import Person, PersonForm
 
 '''
 this page has two types of login:

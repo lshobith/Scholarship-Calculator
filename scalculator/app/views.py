@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
-from .models import Person, PersonForm
+from .models import Person, PersonForm, Scholarship
 from .forms import WebmailVerifyForm
 import poplib
 
@@ -37,9 +37,11 @@ def wverify(request):
                 serv = poplib.POP3_SSL( request.POST['server'] , '995' )
                 status_username = serv.user( request.POST['webmail_id'] )
                 status_password = serv.pass_( request.POST['password'] )
-                if status_username == '' and status_password == '':
-                    similar_users = Person.objects.filter()
-                    current_user = Person.objects.get(gmail_id=request.session['userid'])
+                '''
+                if status_username == '' and status_password == '': #TODO
+                    similar_users = Person.objects.filter() #TODO
+                    current_user = Person.objects.get(gmail_id=request.session['userid']) #TODO
+                '''
             except Exception:
                 pass
     else:
@@ -83,7 +85,10 @@ def eligible(request):
             pass
         return HttpResponse("Invalid User, Please login again!")
 
-    return render(request, 'app/eligible.html')
+    scholarship_list = Scholarship.objects.all()
+    content = {'scholarship_list': scholarship_list}
+
+    return render(request, 'app/eligible.html', content)
 
 '''
 a student can mark some scholarships that

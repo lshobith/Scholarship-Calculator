@@ -8,11 +8,19 @@
     </head>
     <body>
         {% csrf_token %}
-        <h1>Signed in</h1>
         <button id="signOut" style="display:none" onclick="signOut();">Sign out</button>
         <a href="wverify">webmail verification</a>
         <a href="saved">saved scholarships</a>
         <a href="profile">profile</a>
+        {% if scholarship_list %}
+            <ul>
+            {% for scholarship in scholarship_list %}
+                <li>{{ scholarship.scholarship_name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Available Scholarships</p>
+        {% endif %}
         <script>
             // using jQuery
             function getCookie(name) {

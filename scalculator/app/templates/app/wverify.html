@@ -5,5 +5,10 @@
     </head>
     <body>
         <a href="eligible">back</a>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
     </body>
 </html>

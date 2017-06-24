@@ -8,10 +8,8 @@
     </head>
     <body>
         {% csrf_token %}
-        <center>
-            <h1>login with gmail</h1>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        </center>
+        <h1>login with gmail</h1>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <script>
             // using jQuery
             function getCookie(name) {

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
 from .models import Person, PersonForm
+from .forms import WebmailVerifyForm
+import poplib
 
 '''
 this page has two types of login:
@@ -21,8 +23,29 @@ this verification is needed only once.
 def wverify(request):
     if not request.session.__contains__('userid'):
         return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
 
-    return render(request, 'app/wverify.html')
+    if request.method == 'POST':
+        form = WebmailVerifyForm(request.POST)
+        if form.is_valid():
+            try:
+                serv = poplib.POP3_SSL( request.POST['server'] , '995' )
+                status_username = serv.user( request.POST['webmail_id'] )
+                status_password = serv.pass_( request.POST['password'] )
+                if status_username == '' and status_password == '':
+                    similar_users = Person.objects.filter()
+                    current_user = Person.objects.get(gmail_id=request.session['userid'])
+            except Exception:
+                pass
+    else:
+        form = WebmailVerifyForm()
+
+    return render(request, 'app/wverify.html', {'form': form})
 
 '''
 students enter their details in this page.
@@ -30,6 +53,12 @@ students enter their details in this page.
 def profile(request):
     if not request.session.__contains__('userid'):
         return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
     person = Person.objects.get(gmail_id=request.session['userid'])
     if request.method == 'POST':
         form = PersonForm(request.POST, instance=person)
@@ -47,6 +76,12 @@ apply are shown in this page.
 def eligible(request):
     if not request.session.__contains__('userid'):
         return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
 
     return render(request, 'app/eligible.html')
 
@@ -58,6 +93,12 @@ those scholarships are shown in this page.
 def saved(request):
     if not request.session.__contains__('userid'):
         return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
 
     return render(request, 'app/saved.html')
 

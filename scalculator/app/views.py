@@ -61,13 +61,13 @@ def profile(request):
         except KeyError:
             pass
         return HttpResponse("Invalid User, Please login again!")
-    person = Person.objects.get(gmail_id=request.session['userid'])
+    current_user = Person.objects.get(gmail_id=request.session['userid'])
     if request.method == 'POST':
-        form = PersonForm(request.POST, instance=person)
+        form = PersonForm(request.POST, instance=current_user)
         if form.is_valid():
             form.save()
     else:
-        form = PersonForm(instance=person)
+        form = PersonForm(instance=current_user)
 
     return render(request, 'app/profile.html', {'form': form})
 
@@ -84,7 +84,7 @@ def eligible(request):
         except KeyError:
             pass
         return HttpResponse("Invalid User, Please login again!")
-
+    current_user = Person.objects.get(gmail_id=request.session['userid'])
     scholarship_list = Scholarship.objects.all()
     content = {'scholarship_list': scholarship_list}
 

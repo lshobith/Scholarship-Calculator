@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, TextInput
 
 
 '''
@@ -54,6 +54,16 @@ class Person(models.Model):
         ('Y','Yes'),
         ('N','No'),
     )
+    RELIGION = (
+        ('H', 'Hinduism'),
+        ('I', 'Islam'),
+        ('C', 'Christianity'),
+        ('S', 'Sikhism'),
+        ('B', 'Buddhism'),
+        ('J', 'Jainism'),
+        ('Z', 'Zoroastrianism'),
+        ('O', 'Others'),
+    )
 
     # website private data
     gmail_id = models.CharField(max_length=50, primary_key=True)
@@ -64,13 +74,14 @@ class Person(models.Model):
 
     # user data
     person_name = models.CharField(max_length=100, null=True)
-    birth_date = models.DateField(null=True)
-    gender = models.CharField(max_length=1, choices=GENDER, default='')
+    birth_date = models.DateField()
+    gender = models.CharField(max_length=1, choices=GENDER, null=True)
     family_income = models.IntegerField(default=0)
     category = models.CharField(max_length=3, choices=CATEGORY, default='GEN')
     programme = models.CharField(max_length=3, choices=PROGRAMME, default='P')
-    current_cpi = models.DecimalField(default=0.00, decimal_places=2,max_digits=4)
+    current_cpi = models.DecimalField(default=0, decimal_places=2,max_digits=4)
     citizen_india = models.CharField(max_length=1, choices=CITIZEN_INDIA, default='N')
+    religion = models.CharField(max_length=1, choices=RELIGION, null=True)
 
 
 '''
@@ -80,8 +91,8 @@ this form is used for editing the database.
 '''
 class PersonForm(ModelForm):
     class Meta:
-        # the model form is based on.
+        # the model form is based on Person.
         model = Person
 
         # Should not contain 'IITG_student', 'gmail_id' and 'marked_scholarships'.
-        fields = ('person_name', 'birth_date', 'gender', 'family_income', 'category', 'programme', 'current_cpi', 'citizen_india')
+        fields = ('person_name', 'birth_date', 'gender', 'family_income', 'category', 'programme', 'current_cpi', 'citizen_india', 'religion')

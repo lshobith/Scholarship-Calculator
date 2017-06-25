@@ -12,6 +12,13 @@ $ pip install django
 $ pip install --upgrade oauth2client
 ```
 
+## setup commands
+```bash
+$ python manage.py makemigrations app
+$ python manage.py migrate
+$ python manage.py collectstatic
+```
+
 ## scalculator
 A website to find scholarships.
 

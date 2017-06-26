@@ -30,6 +30,7 @@ class Scholarship(models.Model):
     scholarship_for_disabled = models.CharField(max_length=1, choices=SCHOLARSHIP_FOR_DISABLED, default='N')
     minimum_disability_percent = models.PositiveIntegerField(blank=True)
     eligible_nations = models.CharField(max_length=20, choices=ELIGIBLE_NATIONS, default='ALL')
+    #scholarship_link = models.URLField()
 
     # stages of education eligible for scholarship
     # for hostellers

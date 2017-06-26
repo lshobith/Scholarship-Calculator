@@ -1,54 +1,43 @@
-{% load static %}
+{% extends "app/base.html" %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Eligible</title>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.min.css' %}"  media="screen,projection"/>
-        <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
-    </head>
-    <body>
-        {% csrf_token %}
-        <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
-        <div class="navbar-fixed">
-            <nav>
-                <div class="nav-wrapper">
-                    <a href="#" class="brand-logo right">Logo</a>
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
-                        <li class="active"><a href="eligible">eligible</a></li>
-                        <li><a href="profile">profile</a></li>
-                        <li><a href="saved">saved scholarships</a></li>
-                        <li><a href="wverify">webmail verification</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        {% if scholarship_list %}
-            <div class="row">
-                {% for scholarship in scholarship_list %}
-                    <div class="col s12 m6">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">{{ scholarship.scholarship_name }}</span>
-                                <p>I am a very simple card. I am good at containing small bits of information.
-                                I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                                <a href="#">This is a link</a>
-                            </div>
+{% block head_content %}
+    <title>Eligible</title>
+{% endblock %}
+
+{% block content %}
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo right">Logo</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
+                    <li class="active"><a href="eligible">eligible</a></li>
+                    <li><a href="profile">profile</a></li>
+                    <li><a href="saved">saved scholarships</a></li>
+                    <li><a href="wverify">webmail verification</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    {% if scholarship_list %}
+        <div class="row">
+            {% for scholarship in scholarship_list %}
+                <div class="col s12 m6">
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">{{ scholarship.scholarship_name }}</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                            I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                            <a href="#">This is a link</a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No Available Scholarships</p>
-        {% endif %}
-        <script type="text/javascript" src="{% static 'app/js/gsignout.js' %}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript" src="{% static 'app/js/materialize.min.js' %}"></script>
-    </body>
-</html>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No Available Scholarships</p>
+    {% endif %}
+{% endblock %}

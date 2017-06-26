@@ -1,25 +1,29 @@
-{% load static %}
+{% extends "app/base.html" %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Webmail verification</title>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--<link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.min.css' %}"  media="screen,projection"/>-->
-        <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
-    </head>
-    <body>
+{% block head_content %}
+    <title>Webmail verification</title>
+{% endblock %}
+
+{% block content %}
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo right">Logo</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
+                    <li><a href="eligible">eligible</a></li>
+                    <li><a href="profile">profile</a></li>
+                    <li><a href="saved">saved scholarships</a></li>
+                    <li class="active"><a href="wverify">webmail verification</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <form method="post" action="">
         {% csrf_token %}
-        <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
-        <a href="eligible">back</a>
-        <form method="post" action="">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit" />
-        </form>
-        <script type="text/javascript" src="{% static 'app/js/gsignout.js' %}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!--<script type="text/javascript" src="{% static 'app/js/materialize.min.js' %}"></script>-->
-    </body>
-</html>
+        {{ form }}
+        <button class="btn waves-effect waves-light" type="submit" value="Submit">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+{% endblock %}

@@ -19,6 +19,7 @@
             </div>
         </nav>
     </div>
+    <main>
     <form method="post" action="">
         {% csrf_token %}
         {{ form }}
@@ -26,4 +27,5 @@
             <i class="material-icons right">send</i>
         </button>
     </form>
+    </main>
 {% endblock %}

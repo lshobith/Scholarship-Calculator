@@ -1,41 +1,29 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block head_content %}{% endblock %}
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.min.css' %}"  media="screen,projection"/>
-        <link type="text/css" rel="stylesheet" href="{% static 'app/css/style.css' %}"/>
         <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
+
+        <link href="{% static 'app/css/bootstrap.min.css' %}" rel="stylesheet">
     </head>
     <body>
+        <ul class="nav nav-tabs">
+            {% block side_nav_content %}{% endblock %}
+        </ul>
+
         {% csrf_token %}
         <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
 
         {% block content %}{% endblock %}
 
-        <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-          </div>
-        </footer>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
         <script type="text/javascript" src="{% static 'app/js/gsignout.js' %}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript" src="{% static 'app/js/materialize.min.js' %}"></script>
+        <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
     </body>
 </html>

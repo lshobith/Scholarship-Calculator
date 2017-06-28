@@ -13,6 +13,7 @@
 
 {% block content %}
     <main>
+        <div class="alert alert-warning col-md-10 col-md-offset-1" role="alert">This is not working currently. Unable to connect to webmail server.</div>
         <form method="post" action="" class="form-horizontal">
             {% csrf_token %}
             {{ form.non_field_errors }}

@@ -1,25 +1,23 @@
-{% load static %}
+{% extends "app/base.html" %}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Profile</title>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--<link type="text/css" rel="stylesheet" href="{% static 'app/css/materialize.min.css' %}"  media="screen,projection"/>-->
-        <meta name="google-signin-client_id" content="541322088910-o44t5oof2fr0hfjb4j4r3n27k67g2avb.apps.googleusercontent.com">
-    </head>
-    <body>
-        {% csrf_token %}
-        <div class="g-signin2" data-onsuccess="onSignIn" style="display: none;"></div>
-        <a href="eligible">back</a>
-        <form method="post" action="" class="col s12">
+{% block head_content %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block side_nav_content %}
+    <li role="presentation"><a href="eligible">eligible</a></li>
+    <li role="presentation" class="active"><a href="profile">profile</a></li>
+    <li role="presentation"><a href="saved">saved scholarships</a></li>
+    <li role="presentation"><a href="wverify">webmail verification</a></li>
+    <button onclick="signOut();">Sign out</button>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <form method="post" action="">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit" />
         </form>
-        <script type="text/javascript" src="{% static 'app/js/gsignout.js' %}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!--<script type="text/javascript" src="{% static 'app/js/materialize.min.js' %}"></script>-->
-    </body>
-</html>
+    </main>
+{% endblock %}

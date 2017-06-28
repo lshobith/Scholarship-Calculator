@@ -4,28 +4,20 @@
     <title>Webmail verification</title>
 {% endblock %}
 
+{% block side_nav_content %}
+    <li role="presentation"><a href="eligible">eligible</a></li>
+    <li role="presentation"><a href="profile">profile</a></li>
+    <li role="presentation"><a href="saved">saved scholarships</a></li>
+    <li role="presentation" class="active"><a href="wverify">webmail verification</a></li>
+    <button onclick="signOut();">Sign out</button>
+{% endblock %}
+
 {% block content %}
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Logo</a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
-                    <li><a href="eligible">eligible</a></li>
-                    <li><a href="profile">profile</a></li>
-                    <li><a href="saved">saved scholarships</a></li>
-                    <li class="active"><a href="wverify">webmail verification</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
     <main>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form }}
-        <button class="btn waves-effect waves-light" type="submit" value="Submit">Submit
-            <i class="material-icons right">send</i>
-        </button>
-    </form>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
     </main>
 {% endblock %}

@@ -11,10 +11,6 @@ class Scholarship(models.Model):
         ('Y', 'Yes'),
         ('N', 'No'),
     )
-    SCHOLARSHIP_FOR_DISABLED = (
-        ('Y', 'Yes'),
-        ('N', 'No'),
-    )
     ELIGIBLE_NATIONS = (
         ('ALL', 'All'),
         ('INDIA', 'India'),
@@ -22,19 +18,18 @@ class Scholarship(models.Model):
 
     # scholarship data
     scholarship_name = models.CharField(max_length=1000)
-    maximum_income_annual = models.PositiveIntegerField(blank=True)
-    maximum_income_monthly = models.PositiveIntegerField(blank=True)
-    minimum_percent = models.PositiveIntegerField(blank=True)
-    minimum_cpi = models.DecimalField(blank=True, decimal_places=2, max_digits=4)
     iitg_scholarship = models.CharField(max_length=1, choices=IITG_SCHOLARSHIP, default='N')
-    scholarship_for_disabled = models.CharField(max_length=1, choices=SCHOLARSHIP_FOR_DISABLED, default='N')
-    minimum_disability_percent = models.PositiveIntegerField(blank=True)
+    maximum_income_annual = models.PositiveIntegerField(blank=True, null=True)
+    maximum_income_monthly = models.PositiveIntegerField(blank=True, null=True)
+    maximum_lump_sum_or_installments = models.PositiveIntegerField(blank=True, null=True)
+    minimum_percent = models.PositiveIntegerField(blank=True, null=True)
+    minimum_cpi = models.DecimalField(blank=True, decimal_places=2, max_digits=4, null=True)
+    minimum_disability_percent = models.PositiveIntegerField(blank=True, null=True)
     eligible_nations = models.CharField(max_length=20, choices=ELIGIBLE_NATIONS, default='ALL')
-    #scholarship_link = models.URLField()
+    scholarship_link = models.URLField(blank=True)
 
     # stages of education eligible for scholarship
-    # for hostellers
-    level_0001_hostellers = models.BooleanField(default=False)
+    level_0001_hostellers = models.BooleanField(default=False)                  # for hostellers
     level_0002_hostellers = models.BooleanField(default=False)
     level_0003_hostellers = models.BooleanField(default=False)
     level_0004_hostellers = models.BooleanField(default=False)
@@ -46,8 +41,7 @@ class Scholarship(models.Model):
     level_0010_hostellers = models.BooleanField(default=False)
     level_0011_hostellers = models.BooleanField(default=False)
     level_0012_hostellers = models.BooleanField(default=False)
-    # for day scholars
-    level_0001_day_scholars = models.BooleanField(default=False)
+    level_0001_day_scholars = models.BooleanField(default=False)                # for day scholars
     level_0002_day_scholars = models.BooleanField(default=False)
     level_0003_day_scholars = models.BooleanField(default=False)
     level_0004_day_scholars = models.BooleanField(default=False)
@@ -59,6 +53,17 @@ class Scholarship(models.Model):
     level_0010_day_scholars = models.BooleanField(default=False)
     level_0011_day_scholars = models.BooleanField(default=False)
     level_0012_day_scholars = models.BooleanField(default=False)
+    level_ug = models.BooleanField(default=False)                               # higher education
+    level_pg = models.BooleanField(default=False)
+    level_mphil = models.BooleanField(default=False)
+    level_phd = models.BooleanField(default=False)
+
+    # extra
+    level_a1 = models.BooleanField(default=False)
+    level_a2 = models.BooleanField(default=False)
+    level_a3 = models.BooleanField(default=False)
+    level_a4 = models.BooleanField(default=False)
+    level_a5 = models.BooleanField(default=False)
 
     # religions eligible for scholarship
     hinduism = models.BooleanField(default=True)
@@ -70,6 +75,20 @@ class Scholarship(models.Model):
     zoroastrianism = models.BooleanField(default=True)
     other_religions = models.BooleanField(default=True)
 
+    # category
+    oc = models.BooleanField(default=True)
+    sc = models.BooleanField(default=True)
+    st = models.BooleanField(default=True)
+    pwd = models.BooleanField(default=True)
+    obc = models.BooleanField(default=True)
+
+    # workers
+    beedi = models.BooleanField(default=True)
+    cine = models.BooleanField(default=True)
+    iomc = models.BooleanField(default=True)
+    lsdm = models.BooleanField(default=True)
+
+
 
 '''
 table that contains profile of the user.
@@ -77,6 +96,7 @@ table that contains profile of the user.
 class Person(models.Model):
     # choices
     GENDER = (
+        ('E', '-EMPTY-'),
         ('M', 'Male'),
         ('F', 'Female'),
         ('O','Other'),
@@ -86,28 +106,39 @@ class Person(models.Model):
         ('N', 'no'),
     )
     CATEGORY = (
+        ('E', '-EMPTY-'),
         ('GEN','General'),
         ('SC','Scheduled Class'),
         ('ST','Scheduled Tribe'),
         ('PWD','Person With Disability'),
         ('OBC', 'Other Backward Class'),
     )
-    PROGRAMME = (
-        ('P','Preparatory'),
-        ('B1','B.Tech 1st Year'),
-        ('B2','B.Tech 2nd Year'),
-        ('B3','B.Tech 3rd Year'),
-        ('B4','B.Tech 4th Year'),
-        ('MA1','MA 1st Year'),
-        ('MA2','MA 2nd Year'),
-        ('MS1','MSc 1st Year'),
-        ('MS2','MSc 2nd Year'),
+    EDUCATION = (
+        ('E', '-EMPTY-'),
+        ('L0001', 'Class I'),
+        ('L0002', 'Class II'),
+        ('L0003', 'Class III'),
+        ('L0004', 'Class IV'),
+        ('L0005', 'Class V'),
+        ('L0006', 'Class VI'),
+        ('L0007', 'Class VII'),
+        ('L0008', 'Class VIII'),
+        ('L0009', 'Class IX'),
+        ('L0010', 'Class X'),
+        ('L0011', 'Class XI'),
+        ('L0012', 'Class XII'),
+        ('UG', 'Under Graduate'),
+        ('PG', 'Post Graduate'),
+        ('MPHIL', 'M.Phil'),
+        ('PHD', 'Ph.D'),
     )
     CITIZEN_INDIA = (
+        ('E', '-EMPTY-'),
         ('Y','Yes'),
         ('N','No'),
     )
     RELIGION = (
+        ('E', '-EMPTY-'),
         ('H', 'Hinduism'),
         ('I', 'Islam'),
         ('C', 'Christianity'),
@@ -118,6 +149,7 @@ class Person(models.Model):
         ('O', 'Others'),
     )
     STUDENT_TYPE = (
+        ('E', '-EMPTY-'),
         ('H', 'Hosteller'),
         ('D', 'Day Scholar'),
     )
@@ -130,16 +162,16 @@ class Person(models.Model):
     marked_scholarships = models.ManyToManyField(Scholarship)
 
     # user data
-    person_name = models.CharField(max_length=100, null=True)
-    birth_date = models.DateField(null=True)
-    gender = models.CharField(max_length=1, choices=GENDER, null=True)
-    family_income = models.PositiveIntegerField(null=True)
-    category = models.CharField(max_length=3, choices=CATEGORY, default='GEN') #
-    programme = models.CharField(max_length=3, choices=PROGRAMME, default='P') #
-    current_cpi = models.DecimalField(default=0, decimal_places=2, max_digits=4)
-    citizen_india = models.CharField(max_length=1, choices=CITIZEN_INDIA, default='N')
-    religion = models.CharField(max_length=1, choices=RELIGION, null=True)
-    student_type = models.CharField(max_length=1, choices=STUDENT_TYPE, null=True)
+    person_name = models.CharField(max_length=100, blank=True, default='')
+    birth_date = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER, default='E')
+    family_income = models.PositiveIntegerField(null=True, blank=True)
+    category = models.CharField(max_length=3, choices=CATEGORY, default='E')
+    education = models.CharField(max_length=5, choices=EDUCATION, default='E')
+    current_cpi = models.DecimalField(null=True, decimal_places=2, max_digits=4, blank=True)
+    citizen_india = models.CharField(max_length=1, choices=CITIZEN_INDIA, default='E')
+    religion = models.CharField(max_length=1, choices=RELIGION, default='E')
+    student_type = models.CharField(max_length=1, choices=STUDENT_TYPE, default='E')
 
 
 '''
@@ -153,4 +185,4 @@ class PersonForm(ModelForm):
         model = Person
 
         # Should not contain 'IITG_student', 'gmail_id' and 'marked_scholarships'.
-        fields = ['person_name', 'birth_date', 'gender', 'family_income', 'category', 'programme', 'current_cpi', 'citizen_india', 'religion', 'student_type']
+        fields = ['person_name', 'birth_date', 'gender', 'family_income', 'category', 'education', 'current_cpi', 'citizen_india', 'religion', 'student_type']

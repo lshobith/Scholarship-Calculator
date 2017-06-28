@@ -4,40 +4,20 @@
     <title>Eligible</title>
 {% endblock %}
 
+{% block side_nav_content %}
+    <li role="presentation" class="active"><a href="eligible">eligible</a></li>
+    <li role="presentation"><a href="profile">profile</a></li>
+    <li role="presentation"><a href="saved">saved scholarships</a></li>
+    <li role="presentation"><a href="wverify">webmail verification</a></li>
+    <button onclick="signOut();">Sign out</button>
+{% endblock %}
+
 {% block content %}
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Logo</a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
-                    <li class="active"><a href="eligible">eligible</a></li>
-                    <li><a href="profile">profile</a></li>
-                    <li><a href="saved">saved scholarships</a></li>
-                    <li><a href="wverify">webmail verification</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
     <main>
         {% if scholarship_list %}
-            <div class="row">
                 {% for scholarship in scholarship_list %}
-                    <div class="col s12 m6">
-                        <div class="card blue-grey darken-1">
-                            <div class="card-content white-text">
-                                <span class="card-title">{{ scholarship.scholarship_name }}</span>
-                                <p>I am a very simple card. I am good at containing small bits of information.
-                                I am convenient because I require little markup to use effectively.</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
-                                <a href="#">This is a link</a>
-                            </div>
-                        </div>
-                    </div>
+                    <h3>{{ scholarship.scholarship_name }}</h3>
                 {% endfor %}
-            </div>
         {% else %}
             <p>No Available Scholarships</p>
         {% endif %}

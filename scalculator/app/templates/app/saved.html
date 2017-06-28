@@ -4,21 +4,15 @@
     <title>Saved</title>
 {% endblock %}
 
+{% block side_nav_content %}
+    <li role="presentation"><a href="eligible">eligible</a></li>
+    <li role="presentation"><a href="profile">profile</a></li>
+    <li role="presentation" class="active"><a href="saved">saved scholarships</a></li>
+    <li role="presentation"><a href="wverify">webmail verification</a></li>
+    <button onclick="signOut();">Sign out</button>
+{% endblock %}
+
 {% block content %}
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Logo</a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sign out" onclick="signOut();">Sign out</a></li>
-                    <li><a href="eligible">eligible</a></li>
-                    <li><a href="profile">profile</a></li>
-                    <li class="active"><a href="saved">saved scholarships</a></li>
-                    <li><a href="wverify">webmail verification</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
     <main>
     </main>
 {% endblock %}

@@ -21,7 +21,7 @@
                     {% block side_nav_content %}{% endblock %}
                 </ul>
                 <ul class="nav navbar-right">
-                    <button type="button" class="btn btn-link navbar-btn" onclick="signOut();">Sign out</button>
+                    <button type="button" style="margin-right: 0.5cm" class="btn btn-primary navbar-btn" onclick="signOut();">Sign out</button>
                 </ul>
             </div>
         </nav>
@@ -38,5 +38,6 @@
         <script type="text/javascript" src="{% static 'app/js/gsignout.js' %}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'app/js/mark.js' %}"></script>
     </body>
 </html>

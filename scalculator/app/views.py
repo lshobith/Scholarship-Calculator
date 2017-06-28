@@ -4,6 +4,7 @@ from oauth2client import client, crypt
 from .models import Person, PersonForm, Scholarship
 from .forms import WebmailVerifyForm
 import poplib
+import re
 
 '''
 this page has two types of login:
@@ -86,7 +87,11 @@ def eligible(request):
         return HttpResponse("Invalid User, Please login again!")
     current_user = Person.objects.get(gmail_id=request.session['userid'])
     scholarship_list = Scholarship.objects.all()
-    content = {'scholarship_list': scholarship_list}
+    marked_scholarship_list = current_user.marked_scholarships.all()
+    content = {
+        'scholarship_list': scholarship_list,
+        'marked_scholarship_list': marked_scholarship_list
+    }
 
     return render(request, 'app/eligible.html', content)
 
@@ -104,8 +109,11 @@ def saved(request):
         except KeyError:
             pass
         return HttpResponse("Invalid User, Please login again!")
+    current_user = Person.objects.get(gmail_id=request.session['userid'])
+    scholarship_list = current_user.marked_scholarships.all()
+    content = {'scholarship_list': scholarship_list}
 
-    return render(request, 'app/saved.html')
+    return render(request, 'app/saved.html', content)
 
 '''
 this is for logout
@@ -139,3 +147,32 @@ def gverify(request):
             new_user.save()
             text = '(new user)' + text
     return HttpResponse(text)
+
+def mark(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
+    if request.method == 'POST':
+        number = int(re.search(r'\d+', request.POST['scholarship_id']).group())
+        keyword = ''.join([i for i in request.POST['scholarship_id'] if not i.isdigit()])
+        current_user = Person.objects.get(gmail_id=request.session['userid'])
+        requested_scholarship = Scholarship.objects.get(id=number)
+        if keyword == 'save':
+            try:
+                current_user.marked_scholarships.add(requested_scholarship)
+            except Exception:
+                return HttpResponse('reload your page and try again')
+            return HttpResponse('save ok')
+        elif keyword == 'remove':
+            try:
+                current_user.marked_scholarships.remove(requested_scholarship)
+            except Exception:
+                return HttpResponse('reload your page and try again')
+            return HttpResponse('remove ok')
+        else:
+            return HttpResponse('try again')

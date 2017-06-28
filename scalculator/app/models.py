@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+from django import forms
 
 
 '''
@@ -88,7 +89,17 @@ class Scholarship(models.Model):
     iomc = models.BooleanField(default=True)
     lsdm = models.BooleanField(default=True)
 
+    def unique_id_collapse(self):
+        return 'collapse' + str(self.id)
 
+    def unique_id_save(self):
+        return 'save' + str(self.id)
+
+    def unique_id_remove(self):
+        return 'remove' + str(self.id)
+
+    def unique_id_badge(self):
+        return 'badge' + str(self.id)
 
 '''
 table that contains profile of the user.
@@ -99,7 +110,6 @@ class Person(models.Model):
         ('E', '-EMPTY-'),
         ('M', 'Male'),
         ('F', 'Female'),
-        ('O','Other'),
     )
     IITG_STUDENT = (
         ('Y', 'yes'),
@@ -186,3 +196,16 @@ class PersonForm(ModelForm):
 
         # Should not contain 'IITG_student', 'gmail_id' and 'marked_scholarships'.
         fields = ['person_name', 'birth_date', 'gender', 'family_income', 'category', 'education', 'current_cpi', 'citizen_india', 'religion', 'student_type']
+
+        widgets = {
+            'person_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'family_income': forms.NumberInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'education': forms.Select(attrs={'class': 'form-control'}),
+            'current_cpi': forms.NumberInput(attrs={'class': 'form-control'}),
+            'citizen_india': forms.Select(attrs={'class': 'form-control'}),
+            'religion': forms.Select(attrs={'class': 'form-control'}),
+            'student_type': forms.Select(attrs={'class': 'form-control'}),
+        }

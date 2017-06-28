@@ -22,4 +22,7 @@ urlpatterns = [
 
     # this function is for logout
     url(r'^glogout$', views.glogout, name='glogout'),
+
+    # this function is for marking scholarship
+    url(r'^mark$', views.mark, name='mark'),
 ]

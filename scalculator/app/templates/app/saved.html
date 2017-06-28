@@ -1,17 +1,56 @@
 {% extends "app/base.html" %}
 
 {% block head_content %}
-    <title>Saved</title>
+<title>Saved</title>
 {% endblock %}
 
 {% block side_nav_content %}
-    <li role="presentation"><a href="eligible">eligible</a></li>
-    <li role="presentation"><a href="profile">profile</a></li>
-    <li role="presentation" class="active"><a href="saved">saved scholarships</a></li>
-    <li role="presentation"><a href="wverify">webmail verification</a></li>
+<li role="presentation"><a href="eligible">Eligible Scholarships</a></li>
+<li role="presentation"><a href="profile">Profile</a></li>
+<li role="presentation" class="active"><a href="saved">Saved Scholarships</a></li>
+<li role="presentation"><a href="wverify">Webmail Verification</a></li>
 {% endblock %}
 
 {% block content %}
-    <main>
-    </main>
+<main>
+    {% if scholarship_list %}
+    <div class="alert alert-info col-md-10 col-md-offset-1" role="alert">The Saved Scholarships will not disappear as soon as they are removed. You are free to add and remove them as long as you don't reload this page.</div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel-group" id="accordion">
+                {% for scholarship in scholarship_list %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#{{ scholarship.unique_id_collapse }}">
+                                {{ scholarship.scholarship_name }}
+                                </a>
+                                {% if scholarship.iitg_scholarship == 'Y' %}
+                                <span class="label label-info">IITG</span>
+                                {% endif %}
+                                <span id="{{ scholarship.unique_id_badge }}" class="label label-success" style="visibility: visible;">Saved</span>
+                            </h4>
+                        </div>
+                        {% if forloop.first %}
+                        <div id="{{ scholarship.unique_id_collapse }}" class="panel-collapse collapse in">
+                        {% else %}
+                        <div id="{{ scholarship.unique_id_collapse }}" class="panel-collapse collapse">
+                        {% endif %}
+                            <div class="panel-body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat.
+                            <br /><button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: block;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: none;" onclick="markIt(this);">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align:center"><h1><small>No Saved Scholarships</small></h1></div>
+    {% endif %}
+</main>
 {% endblock %}

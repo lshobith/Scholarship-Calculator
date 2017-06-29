@@ -86,8 +86,58 @@ def eligible(request):
             pass
         return HttpResponse("Invalid User, Please login again!")
     current_user = Person.objects.get(gmail_id=request.session['userid'])
-    scholarship_list = Scholarship.objects.all()
     marked_scholarship_list = current_user.marked_scholarships.all()
+
+    # FILTER START
+    if current_user.iitg_student == 'N':
+        scholarship_list = Scholarship.objects.filter(
+            iitg_scholarship = 'N'
+        )
+    else:
+        scholarship_list = Scholarship.objects.all()
+    if current_user.citizen_india == 'N':
+        scholarship_list = scholarship_list.filter(
+            eligible_nations = 'ALL'
+        )
+    my_filter = {}
+    if not current_user.education == 'E':
+        req_string = 'level_' + current_user.education
+        my_filter[req_string] = True
+    if not current_user.extra_education == 'E':
+        req_string = 'level_' + current_user.extra_education
+        my_filter[req_string] = True
+    if not current_user.religion == 'E':
+        my_filter[current_user.religion] = True
+    if not current_user.category == 'E':
+        my_filter[current_user.category] = True
+    if not current_user.workers == 'E':
+        my_filter[current_user.workers] = True
+    if not current_user.armed == 'E':
+        my_filter[current_user.armed] = True
+    if not current_user.gender == 'E':
+        my_filter[current_user.gender] = True
+    if not current_user.annual_income is None:
+        req_string = 'maximum_income_annual__gte'
+        my_filter[req_string] = current_user.annual_income
+    if not current_user.monthly_income is None:
+        req_string = 'maximum_income_monthly__gte'
+        my_filter[req_string] = current_user.monthly_income
+    if not current_user.lump_sum is None:
+        req_string = 'maximum_lump_sum_or_installments__gte'
+        my_filter[req_string] = current_user.lump_sum
+    if not current_user.current_cpi is None:
+        req_string = 'minimum_cpi__lte'
+        my_filter[req_string] = current_user.current_cpi
+    if not current_user.marks_percentage is None:
+        req_string = 'minimum_percent__lte'
+        my_filter[req_string] = current_user.marks_percentage
+    if not current_user.disability_percent is None:
+        req_string = 'minimum_disability_percent__lte'
+        my_filter[req_string] = current_user.disability_percent
+
+    scholarship_list = scholarship_list.filter(**my_filter)
+    # FILTER END
+
     content = {
         'scholarship_list': scholarship_list,
         'marked_scholarship_list': marked_scholarship_list

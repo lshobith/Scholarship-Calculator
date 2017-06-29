@@ -19,6 +19,7 @@ class Scholarship(models.Model):
 
     # scholarship data
     scholarship_name = models.CharField(max_length=1000)
+    scholarship_link = models.URLField(blank=True)
     iitg_scholarship = models.CharField(max_length=1, choices=IITG_SCHOLARSHIP, default='N')
     maximum_income_annual = models.PositiveIntegerField(blank=True, null=True)
     maximum_income_monthly = models.PositiveIntegerField(blank=True, null=True)
@@ -27,44 +28,34 @@ class Scholarship(models.Model):
     minimum_cpi = models.DecimalField(blank=True, decimal_places=2, max_digits=4, null=True)
     minimum_disability_percent = models.PositiveIntegerField(blank=True, null=True)
     eligible_nations = models.CharField(max_length=20, choices=ELIGIBLE_NATIONS, default='ALL')
-    scholarship_link = models.URLField(blank=True)
+
+    male = models.BooleanField(default=True)
+    female = models.BooleanField(default=True)
 
     # stages of education eligible for scholarship
-    level_0001_hostellers = models.BooleanField(default=False)                  # for hostellers
-    level_0002_hostellers = models.BooleanField(default=False)
-    level_0003_hostellers = models.BooleanField(default=False)
-    level_0004_hostellers = models.BooleanField(default=False)
-    level_0005_hostellers = models.BooleanField(default=False)
-    level_0006_hostellers = models.BooleanField(default=False)
-    level_0007_hostellers = models.BooleanField(default=False)
-    level_0008_hostellers = models.BooleanField(default=False)
-    level_0009_hostellers = models.BooleanField(default=False)
-    level_0010_hostellers = models.BooleanField(default=False)
-    level_0011_hostellers = models.BooleanField(default=False)
-    level_0012_hostellers = models.BooleanField(default=False)
-    level_0001_day_scholars = models.BooleanField(default=False)                # for day scholars
-    level_0002_day_scholars = models.BooleanField(default=False)
-    level_0003_day_scholars = models.BooleanField(default=False)
-    level_0004_day_scholars = models.BooleanField(default=False)
-    level_0005_day_scholars = models.BooleanField(default=False)
-    level_0006_day_scholars = models.BooleanField(default=False)
-    level_0007_day_scholars = models.BooleanField(default=False)
-    level_0008_day_scholars = models.BooleanField(default=False)
-    level_0009_day_scholars = models.BooleanField(default=False)
-    level_0010_day_scholars = models.BooleanField(default=False)
-    level_0011_day_scholars = models.BooleanField(default=False)
-    level_0012_day_scholars = models.BooleanField(default=False)
-    level_ug = models.BooleanField(default=False)                               # higher education
-    level_pg = models.BooleanField(default=False)
-    level_mphil = models.BooleanField(default=False)
-    level_phd = models.BooleanField(default=False)
+    level_l0001 = models.BooleanField(default=False)
+    level_l0002 = models.BooleanField(default=False)
+    level_l0003 = models.BooleanField(default=False)
+    level_l0004 = models.BooleanField(default=False)
+    level_l0005 = models.BooleanField(default=False)
+    level_l0006 = models.BooleanField(default=False)
+    level_l0007 = models.BooleanField(default=False)
+    level_l0008 = models.BooleanField(default=False)
+    level_l0009 = models.BooleanField(default=False)
+    level_l0010 = models.BooleanField(default=False)
+    level_l0011 = models.BooleanField(default=False)
+    level_l0012 = models.BooleanField(default=False)
+    level_lug = models.BooleanField(default=False)
+    level_lpg = models.BooleanField(default=False)
+    level_lmphil = models.BooleanField(default=False)
+    level_lphd = models.BooleanField(default=False)
 
     # extra
-    level_a1 = models.BooleanField(default=False)
-    level_a2 = models.BooleanField(default=False)
-    level_a3 = models.BooleanField(default=False)
-    level_a4 = models.BooleanField(default=False)
-    level_a5 = models.BooleanField(default=False)
+    level_post_matriculation = models.BooleanField(default=True)
+    level_diploma_certificates = models.BooleanField(default=True)
+    level_bachelors_degree = models.BooleanField(default=True)
+    level_diploma_india = models.BooleanField(default=True)
+    level_masters_degree = models.BooleanField(default=True)
 
     # religions eligible for scholarship
     hinduism = models.BooleanField(default=True)
@@ -77,7 +68,7 @@ class Scholarship(models.Model):
     other_religions = models.BooleanField(default=True)
 
     # category
-    oc = models.BooleanField(default=True)
+    gen = models.BooleanField(default=True)
     sc = models.BooleanField(default=True)
     st = models.BooleanField(default=True)
     pwd = models.BooleanField(default=True)
@@ -88,6 +79,12 @@ class Scholarship(models.Model):
     cine = models.BooleanField(default=True)
     iomc = models.BooleanField(default=True)
     lsdm = models.BooleanField(default=True)
+
+    # armed
+    armed = models.BooleanField(default=True)
+    rifles = models.BooleanField(default=True)
+
+    data_about = models.TextField(blank=True)
 
     def unique_id_collapse(self):
         return 'collapse' + str(self.id)
@@ -108,8 +105,8 @@ class Person(models.Model):
     # choices
     GENDER = (
         ('E', '-EMPTY-'),
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('male', 'Male'),
+        ('female', 'Female'),
     )
     IITG_STUDENT = (
         ('Y', 'yes'),
@@ -117,30 +114,30 @@ class Person(models.Model):
     )
     CATEGORY = (
         ('E', '-EMPTY-'),
-        ('GEN','General'),
-        ('SC','Scheduled Class'),
-        ('ST','Scheduled Tribe'),
-        ('PWD','Person With Disability'),
-        ('OBC', 'Other Backward Class'),
+        ('gen','General'),
+        ('sc','Scheduled Class'),
+        ('st','Scheduled Tribe'),
+        ('pwd','Person With Disability'),
+        ('obc', 'Other Backward Class'),
     )
     EDUCATION = (
         ('E', '-EMPTY-'),
-        ('L0001', 'Class I'),
-        ('L0002', 'Class II'),
-        ('L0003', 'Class III'),
-        ('L0004', 'Class IV'),
-        ('L0005', 'Class V'),
-        ('L0006', 'Class VI'),
-        ('L0007', 'Class VII'),
-        ('L0008', 'Class VIII'),
-        ('L0009', 'Class IX'),
-        ('L0010', 'Class X'),
-        ('L0011', 'Class XI'),
-        ('L0012', 'Class XII'),
-        ('UG', 'Under Graduate'),
-        ('PG', 'Post Graduate'),
-        ('MPHIL', 'M.Phil'),
-        ('PHD', 'Ph.D'),
+        ('l0001', 'Class I'),
+        ('l0002', 'Class II'),
+        ('l0003', 'Class III'),
+        ('l0004', 'Class IV'),
+        ('l0005', 'Class V'),
+        ('l0006', 'Class VI'),
+        ('l0007', 'Class VII'),
+        ('l0008', 'Class VIII'),
+        ('l0009', 'Class IX'),
+        ('l0010', 'Class X'),
+        ('l0011', 'Class XI'),
+        ('l0012', 'Class XII'),
+        ('lug', 'Under Graduate'),
+        ('lpg', 'Post Graduate'),
+        ('lmphil', 'M.Phil'),
+        ('lphd', 'Ph.D'),
     )
     CITIZEN_INDIA = (
         ('E', '-EMPTY-'),
@@ -149,24 +146,39 @@ class Person(models.Model):
     )
     RELIGION = (
         ('E', '-EMPTY-'),
-        ('H', 'Hinduism'),
-        ('I', 'Islam'),
-        ('C', 'Christianity'),
-        ('S', 'Sikhism'),
-        ('B', 'Buddhism'),
-        ('J', 'Jainism'),
-        ('Z', 'Zoroastrianism'),
-        ('O', 'Others'),
+        ('hinduism', 'Hinduism'),
+        ('islam', 'Islam'),
+        ('christianity', 'Christianity'),
+        ('sikhism', 'Sikhism'),
+        ('buddhism', 'Buddhism'),
+        ('jainism', 'Jainism'),
+        ('zoroastrianism', 'Zoroastrianism'),
+        ('other_religions', 'Others'),
     )
-    STUDENT_TYPE = (
+    EXTRA_EDUCATION = (
         ('E', '-EMPTY-'),
-        ('H', 'Hosteller'),
-        ('D', 'Day Scholar'),
+        ('post_matriculation', 'Post Matriculation'),
+        ('diploma_certificates', 'Diploma Certificates'),
+        ('bachelors_degree', 'Bachelors Degree'),
+        ('diploma_india', 'Diploma India'),
+        ('masters_degree', 'Masters Degree'),
+    )
+    WORKERS = (
+        ('E', '-EMPTY-'),
+        ('beedi', 'Beedi'),
+        ('cine', 'Cine'),
+        ('iomc', 'IOMC'),
+        ('lsdm', 'LSDM'),
+    )
+    ARMED = (
+        ('E', '-EMPTY-'),
+        ('armed', 'Central Armed Police Forces'),
+        ('rifles', 'Assam Rifles'),
     )
 
     # website private data
     gmail_id = models.CharField(max_length=50, primary_key=True)
-    IITG_student = models.CharField(max_length=1, choices=IITG_STUDENT, default='N')
+    iitg_student = models.CharField(max_length=1, choices=IITG_STUDENT, default='N')
 
     # user's scholarship list
     marked_scholarships = models.ManyToManyField(Scholarship)
@@ -174,14 +186,20 @@ class Person(models.Model):
     # user data
     person_name = models.CharField(max_length=100, blank=True, default='')
     birth_date = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER, default='E')
-    family_income = models.PositiveIntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER, default='E')
+    annual_income = models.PositiveIntegerField(null=True, blank=True)
+    monthly_income = models.PositiveIntegerField(null=True, blank=True)
+    lump_sum = models.PositiveIntegerField(null=True, blank=True)
     category = models.CharField(max_length=3, choices=CATEGORY, default='E')
-    education = models.CharField(max_length=5, choices=EDUCATION, default='E')
+    education = models.CharField(max_length=6, choices=EDUCATION, default='E')
+    extra_education = models.CharField(max_length=20, choices=EXTRA_EDUCATION, default='E')
     current_cpi = models.DecimalField(null=True, decimal_places=2, max_digits=4, blank=True)
+    marks_percentage = models.PositiveIntegerField(null=True, blank=True)
+    disability_percent = models.PositiveIntegerField(null=True, blank=True)
     citizen_india = models.CharField(max_length=1, choices=CITIZEN_INDIA, default='E')
-    religion = models.CharField(max_length=1, choices=RELIGION, default='E')
-    student_type = models.CharField(max_length=1, choices=STUDENT_TYPE, default='E')
+    religion = models.CharField(max_length=15, choices=RELIGION, default='E')
+    workers = models.CharField(max_length=15, choices=WORKERS, default='E')
+    armed = models.CharField(max_length=6, choices=ARMED, default='E')
 
 
 '''
@@ -195,17 +213,23 @@ class PersonForm(ModelForm):
         model = Person
 
         # Should not contain 'IITG_student', 'gmail_id' and 'marked_scholarships'.
-        fields = ['person_name', 'birth_date', 'gender', 'family_income', 'category', 'education', 'current_cpi', 'citizen_india', 'religion', 'student_type']
+        fields = ['person_name', 'birth_date', 'gender', 'annual_income', 'monthly_income', 'lump_sum', 'category', 'education', 'extra_education', 'current_cpi', 'marks_percentage', 'disability_percent', 'citizen_india', 'religion', 'workers', 'armed']
 
         widgets = {
-            'person_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'person_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Name'}),
             'birth_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
-            'family_income': forms.NumberInput(attrs={'class': 'form-control'}),
+            'annual_income': forms.NumberInput(attrs={'class': 'form-control'}),
+            'monthly_income': forms.NumberInput(attrs={'class': 'form-control'}),
+            'lump_sum': forms.NumberInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
             'education': forms.Select(attrs={'class': 'form-control'}),
+            'extra_education': forms.Select(attrs={'class': 'form-control'}),
             'current_cpi': forms.NumberInput(attrs={'class': 'form-control'}),
             'citizen_india': forms.Select(attrs={'class': 'form-control'}),
             'religion': forms.Select(attrs={'class': 'form-control'}),
-            'student_type': forms.Select(attrs={'class': 'form-control'}),
+            'workers': forms.Select(attrs={'class': 'form-control'}),
+            'armed': forms.Select(attrs={'class': 'form-control'}),
+            'marks_percentage': forms.NumberInput(attrs={'class': 'form-control'}),
+            'disability_percent': forms.NumberInput(attrs={'class': 'form-control'}),
         }

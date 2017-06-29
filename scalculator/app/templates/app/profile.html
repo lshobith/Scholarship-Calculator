@@ -39,10 +39,24 @@
                 </div>
             </div>
             <div class="form-group">
-                {{ form.family_income.errors }}
-                <label for="{{ form.family_income.id_for_label }}" class="control-label col-sm-2">Family Income</label>
+                {{ form.annual_income.errors }}
+                <label for="{{ form.annual_income.id_for_label }}" class="control-label col-sm-2">Annual Income</label>
                 <div class="col-sm-2">
-                    {{ form.family_income }}
+                    {{ form.annual_income }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.monthly_income.errors }}
+                <label for="{{ form.monthly_income.id_for_label }}" class="control-label col-sm-2">Monthly Income</label>
+                <div class="col-sm-2">
+                    {{ form.monthly_income }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.lump_sum.errors }}
+                <label for="{{ form.lump_sum.id_for_label }}" class="control-label col-sm-2">Lump Sum or Installments</label>
+                <div class="col-sm-2">
+                    {{ form.lump_sum }}
                 </div>
             </div>
             <div class="form-group">
@@ -60,10 +74,31 @@
                 </div>
             </div>
             <div class="form-group">
+                {{ form.extra_education.errors }}
+                <label for="{{ form.extra_education.id_for_label }}" class="control-label col-sm-2"></label>
+                <div class="col-sm-4">
+                    {{ form.extra_education }}
+                </div>
+            </div>
+            <div class="form-group">
                 {{ form.current_cpi.errors }}
                 <label for="{{ form.current_cpi.id_for_label }}" class="control-label col-sm-2">Current CPI</label>
                 <div class="col-sm-1">
                     {{ form.current_cpi }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.marks_percentage.errors }}
+                <label for="{{ form.marks_percentage.id_for_label }}" class="control-label col-sm-2">Marks Percentage</label>
+                <div class="col-sm-2">
+                    {{ form.marks_percentage }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.disability_percent.errors }}
+                <label for="{{ form.disability_percent.id_for_label }}" class="control-label col-sm-2">Disability Percent</label>
+                <div class="col-sm-2">
+                    {{ form.disability_percent }}
                 </div>
             </div>
             <div class="form-group">
@@ -81,10 +116,17 @@
                 </div>
             </div>
             <div class="form-group">
-                {{ form.student_type.errors }}
-                <label for="{{ form.student_type.id_for_label }}" class="control-label col-sm-2">Student Type</label>
+                {{ form.workers.errors }}
+                <label for="{{ form.workers.id_for_label }}" class="control-label col-sm-2">Workers</label>
                 <div class="col-sm-3">
-                    {{ form.student_type }}
+                    {{ form.workers }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.armed.errors }}
+                <label for="{{ form.armed.id_for_label }}" class="control-label col-sm-2">Armed</label>
+                <div class="col-sm-3">
+                    {{ form.armed }}
                 </div>
             </div>
             <div class="form-group">

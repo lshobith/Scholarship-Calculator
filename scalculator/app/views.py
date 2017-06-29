@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
+from django.db.models import Q
 from .models import Person, PersonForm, Scholarship
 from .forms import WebmailVerifyForm
 import poplib
@@ -116,26 +117,21 @@ def eligible(request):
         my_filter[current_user.armed] = True
     if not current_user.gender == 'E':
         my_filter[current_user.gender] = True
-    if not current_user.annual_income is None:
-        req_string = 'maximum_income_annual__gte'
-        my_filter[req_string] = current_user.annual_income
-    if not current_user.monthly_income is None:
-        req_string = 'maximum_income_monthly__gte'
-        my_filter[req_string] = current_user.monthly_income
-    if not current_user.lump_sum is None:
-        req_string = 'maximum_lump_sum_or_installments__gte'
-        my_filter[req_string] = current_user.lump_sum
-    if not current_user.current_cpi is None:
-        req_string = 'minimum_cpi__lte'
-        my_filter[req_string] = current_user.current_cpi
-    if not current_user.marks_percentage is None:
-        req_string = 'minimum_percent__lte'
-        my_filter[req_string] = current_user.marks_percentage
-    if not current_user.disability_percent is None:
-        req_string = 'minimum_disability_percent__lte'
-        my_filter[req_string] = current_user.disability_percent
 
     scholarship_list = scholarship_list.filter(**my_filter)
+
+    if not current_user.annual_income is None:
+        scholarship_list = scholarship_list.filter(Q(maximum_income_annual__gte = current_user.annual_income) | Q(maximum_income_annual = None))
+    if not current_user.monthly_income is None:
+        scholarship_list = scholarship_list.filter(Q(maximum_income_monthly__gte = current_user.monthly_income) | Q(maximum_income_monthly = None))
+    if not current_user.lump_sum is None:
+        scholarship_list = scholarship_list.filter(Q(maximum_lump_sum_or_installments__gte = current_user.lump_sum) | Q(maximum_lump_sum_or_installments = None))
+    if not current_user.current_cpi is None:
+        scholarship_list = scholarship_list.filter(Q(minimum_cpi__lte = current_user.current_cpi) | Q(minimum_cpi = None))
+    if not current_user.marks_percentage is None:
+        scholarship_list = scholarship_list.filter(Q(minimum_percent__lte = current_user.marks_percentage) | Q(minimum_percent = None))
+    if not current_user.disability_percent is None:
+        scholarship_list = scholarship_list.filter(Q(minimum_disability_percent__lte = current_user.disability_percent) | Q(minimum_disability_percent = None))
     # FILTER END
 
     content = {

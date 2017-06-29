@@ -40,15 +40,20 @@
                                 <div id="{{ scholarship.unique_id_collapse }}" class="panel-collapse collapse">
                                 {% endif %}
                                     <div class="panel-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo consequat.
-                                    {% if scholarship in marked_scholarship_list %}
-                                        <br /><button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: block;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: none;" onclick="markIt(this);">Save</button>
-                                    {% else %}
-                                        <br /><button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: none;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: block;" onclick="markIt(this);">Save</button>
-                                    {% endif %}
+                                        {{ scholarship.data_about }}
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                            {% if scholarship in marked_scholarship_list %}
+                                            <button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: block;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: none;" onclick="markIt(this);">Save</button>
+                                            {% else %}
+                                            <button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: none;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: block;" onclick="markIt(this);">Save</button>
+                                            {% endif %}
+                                            </div>
+                                            <div class="col-md-2" style="margin-top:10px;">
+                                                <a href="{{ scholarship.scholarship_link }}" target="_blank">Link to Website</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

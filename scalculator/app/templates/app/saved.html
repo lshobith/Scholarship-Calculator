@@ -37,11 +37,16 @@
                         <div id="{{ scholarship.unique_id_collapse }}" class="panel-collapse collapse">
                         {% endif %}
                             <div class="panel-body">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
-                            <br /><button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: block;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: none;" onclick="markIt(this);">Save</button>
+                                {{ scholarship.data_about }}
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <button id="{{ scholarship.unique_id_remove }}" type="button" class="btn btn-danger" style="display: block;" onclick="markIt(this);">Remove</button><button id="{{ scholarship.unique_id_save }}" type="button" class="btn btn-primary" style="display: none;" onclick="markIt(this);">Save</button>
+                                    </div>
+                                    <div class="col-md-2" style="margin-top:10px;">
+                                        <a href="{{ scholarship.scholarship_link }}" target="_blank">Link to Website</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

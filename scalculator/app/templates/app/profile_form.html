@@ -1,0 +1,122 @@
+        <div class="alert alert-info col-md-10 col-md-offset-1" role="alert">If there is a field in the form that doesn't concern you, leave it empty.</div>
+        <form method="post" action="" class="form-horizontal">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.person_name.errors }}
+                <label for="{{ form.person_name.id_for_label }}" class="control-label col-sm-2">Name</label>
+                <div class="col-sm-4">
+                    {{ form.person_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.birth_date.errors }}
+                <label for="{{ form.birth_date.id_for_label }}" class="control-label col-sm-2">Birth date</label>
+                <div class="col-sm-2">
+                    {{ form.birth_date }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.gender.errors }}
+                <label for="{{ form.gender.id_for_label }}" class="control-label col-sm-2">Gender</label>
+                <div class="col-sm-2">
+                    {{ form.gender }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.annual_income.errors }}
+                <label for="{{ form.annual_income.id_for_label }}" class="control-label col-sm-2">Annual Income</label>
+                <div class="col-sm-2">
+                    {{ form.annual_income }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.monthly_income.errors }}
+                <label for="{{ form.monthly_income.id_for_label }}" class="control-label col-sm-2">Monthly Income</label>
+                <div class="col-sm-2">
+                    {{ form.monthly_income }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.lump_sum.errors }}
+                <label for="{{ form.lump_sum.id_for_label }}" class="control-label col-sm-2">Lump Sum or Installments</label>
+                <div class="col-sm-2">
+                    {{ form.lump_sum }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.category.errors }}
+                <label for="{{ form.category.id_for_label }}" class="control-label col-sm-2">Category</label>
+                <div class="col-sm-4">
+                    {{ form.category }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.education.errors }}
+                <label for="{{ form.education.id_for_label }}" class="control-label col-sm-2">Education</label>
+                <div class="col-sm-4">
+                    {{ form.education }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.extra_education.errors }}
+                <label for="{{ form.extra_education.id_for_label }}" class="control-label col-sm-2"></label>
+                <div class="col-sm-4">
+                    {{ form.extra_education }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.current_cpi.errors }}
+                <label for="{{ form.current_cpi.id_for_label }}" class="control-label col-sm-2">Current CPI</label>
+                <div class="col-sm-1">
+                    {{ form.current_cpi }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.marks_percentage.errors }}
+                <label for="{{ form.marks_percentage.id_for_label }}" class="control-label col-sm-2">Marks Percentage</label>
+                <div class="col-sm-2">
+                    {{ form.marks_percentage }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.disability_percent.errors }}
+                <label for="{{ form.disability_percent.id_for_label }}" class="control-label col-sm-2">Disability Percent</label>
+                <div class="col-sm-2">
+                    {{ form.disability_percent }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.citizen_india.errors }}
+                <label for="{{ form.citizen_india.id_for_label }}" class="control-label col-sm-2">Citizen of india</label>
+                <div class="col-sm-2">
+                    {{ form.citizen_india }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.religion.errors }}
+                <label for="{{ form.religion.id_for_label }}" class="control-label col-sm-2">Religion</label>
+                <div class="col-sm-3">
+                    {{ form.religion }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.workers.errors }}
+                <label for="{{ form.workers.id_for_label }}" class="control-label col-sm-2">Workers</label>
+                <div class="col-sm-3">
+                    {{ form.workers }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.armed.errors }}
+                <label for="{{ form.armed.id_for_label }}" class="control-label col-sm-2">Armed</label>
+                <div class="col-sm-3">
+                    {{ form.armed }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </div>
+            </div>
+        </form>

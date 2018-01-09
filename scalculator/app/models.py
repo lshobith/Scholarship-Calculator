@@ -4,6 +4,60 @@ from django import forms
 
 
 '''
+table for states in india
+'''
+class IndiaState(models.Model):
+    state_name = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.state_name
+
+'''
+table containing list of workers
+'''
+class Worker(models.Model):
+    worker_name = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.worker_name
+
+'''
+table containing list of educational courses
+'''
+class Education(models.Model):
+    education_name = models.CharField(max_length=5000)
+
+    def __str__(self):
+        return self.education_name
+
+'''
+table containing various religions
+'''
+class Religion(models.Model):
+    religion_name = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.religion_name
+
+'''
+table containing list of categories
+'''
+class Category(models.Model):
+    category_name = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.category_name
+
+'''
+table containing list of genders
+'''
+class Gender(models.Model):
+    gender_name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.gender_name
+
+'''
 table that contains scholarships and their details.
 '''
 class Scholarship(models.Model):
@@ -16,6 +70,14 @@ class Scholarship(models.Model):
         ('ALL', 'All'),
         ('INDIA', 'India'),
     )
+
+    # fields with relations
+    s_eligible_genders = models.ManyToManyField(Gender)
+    s_eligible_categories = models.ManyToManyField(Category)
+    s_eligible_religions = models.ManyToManyField(Religion)
+    s_eligible_education = models.ManyToManyField(Education)
+    s_eligible_workers = models.ManyToManyField(Worker)
+    s_eligible_states_of_india = models.ManyToManyField(IndiaState)
 
     # scholarship data
     scholarship_name = models.CharField(max_length=1000)
@@ -192,6 +254,14 @@ class Person(models.Model):
     # user's scholarship list
     marked_scholarships = models.ManyToManyField(Scholarship)
 
+    # fields with relations
+    eligible_genders = models.ManyToManyField(Gender)
+    eligible_categories = models.ManyToManyField(Category)
+    eligible_religions = models.ManyToManyField(Religion)
+    eligible_education = models.ManyToManyField(Education)
+    eligible_workers = models.ManyToManyField(Worker)
+    eligible_states_of_india = models.ManyToManyField(IndiaState)
+
     # user data
     person_name = models.CharField(max_length=100, blank=True, default='')
     birth_date = models.DateField(null=True, blank=True)
@@ -211,7 +281,7 @@ class Person(models.Model):
     armed = models.CharField(max_length=6, choices=ARMED, default='E')
 
     def __str__(self):
-        return self.person_name + "(" + self.gmail_id + ")"
+        return "[" + self.person_name + "] " + self.gmail_id
 
 
 '''

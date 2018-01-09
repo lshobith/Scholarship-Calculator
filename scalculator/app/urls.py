@@ -20,6 +20,12 @@ urlpatterns = [
     # this page has information about the user
     url(r'^profile$', views.profile, name='profile'),
 
+    # this page is for first time experience for filling profile data
+    url(r'^fxprofile$', views.fxprofile, name='fxprofile'),
+
+    # this page is for first time experience for webmail verification
+    url(r'^fxwver$', views.fxwver, name='fxwver'),
+
     # this function is for logout
     url(r'^glogout$', views.glogout, name='glogout'),
 

@@ -22,10 +22,12 @@ function onSignIn(googleUser) {
     var csrftoken = getCookie('csrftoken');
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
     xhr.onload = function () {
+        console.log(xhr.responseText);
         if (xhr.responseText === 'Sign in failed') {
-            console.log(xhr.responseText)
+            console.log('stub');
+        } else if (xhr.responseText === 'new user') {
+            document.location.href = 'fxprofile';
         } else {
-            console.log(xhr.responseText)
             document.location.href = 'eligible';
         }
     };

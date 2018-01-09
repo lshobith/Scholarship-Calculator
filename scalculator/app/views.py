@@ -162,6 +162,60 @@ def saved(request):
     return render(request, 'app/saved.html', content)
 
 '''
+this page is displayed in case of first time login
+'''
+def fxprofile(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
+
+    current_user = Person.objects.get(gmail_id=request.session['userid'])
+    if request.method == 'POST':
+        form = PersonForm(request.POST, instance=current_user)
+        if form.is_valid():
+            form.save()
+    else:
+        form = PersonForm(instance=current_user)
+    return render(request, 'app/fxprofile.html', {'form': form})
+
+'''
+this page is displayed in case of first time login
+'''
+def fxwver(request):
+    if not request.session.__contains__('userid'):
+        return HttpResponse("you are not logged in!")
+    elif not Person.objects.filter(gmail_id=request.session['userid']).exists():
+        try:
+            del request.session['userid']
+        except KeyError:
+            pass
+        return HttpResponse("Invalid User, Please login again!")
+
+    if request.method == 'POST':
+        form = WebmailVerifyForm(request.POST)
+        if form.is_valid():
+            try:
+                serv = poplib.POP3_SSL( request.POST['server'] , '995' )
+                status_username = serv.user( request.POST['webmail_id'] )
+                status_password = serv.pass_( request.POST['password'] )
+                '''
+                if status_username == '' and status_password == '': #TODO
+                    similar_users = Person.objects.filter() #TODO
+                    current_user = Person.objects.get(gmail_id=request.session['userid']) #TODO
+                '''
+            except Exception:
+                pass
+    else:
+        form = WebmailVerifyForm()
+
+    return render(request, 'app/fxwver.html', {'form': form})
+
+'''
 this is for logout
 '''
 def glogout(request):
@@ -187,11 +241,11 @@ def gverify(request):
         text = 'Sign in failed'
     else:
         request.session['userid'] = idinfo['sub']
-        text = 'Signed in as: ' + idinfo['sub']
+        text = 'old user'
         if not Person.objects.filter(gmail_id=request.session['userid']).exists():
             new_user = Person(gmail_id=request.session['userid'])
             new_user.save()
-            text = '(new user)' + text
+            text = 'new user'
     return HttpResponse(text)
 
 def mark(request):

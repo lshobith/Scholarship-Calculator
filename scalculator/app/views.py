@@ -101,20 +101,21 @@ def eligible(request):
             eligible_nations = 'ALL'
         )
     my_filter = {}
-    if not current_user.education == 'E':
+    if not (current_user.education == 'E' or current_user.education == 'NAOT'):
         req_string = 'level_' + current_user.education
         my_filter[req_string] = True
-    if not current_user.extra_education == 'E':
+    if not (current_user.extra_education == 'E' or current_user.extra_education == 'NAOT'):
         req_string = 'level_' + current_user.extra_education
         my_filter[req_string] = True
-    if not current_user.religion == 'E':
+    if not (current_user.religion == 'E' or current_user.religion == 'NAOT'):
         my_filter[current_user.religion] = True
-    if not current_user.category == 'E':
+    if not (current_user.category == 'E' or current_user.category == 'NAOT'):
         my_filter[current_user.category] = True
-    if not current_user.workers == 'E':
+    if not (current_user.workers == 'E' or current_user.workers == 'NAOT'):
         my_filter[current_user.workers] = True
-    if not current_user.armed == 'E':
+    if not (current_user.armed == 'E' or current_user.armed == 'NAOT'):
         my_filter[current_user.armed] = True
+
     if not current_user.gender == 'E':
         my_filter[current_user.gender] = True
 

@@ -98,30 +98,39 @@ class Scholarship(models.Model):
     def unique_id_badge(self):
         return 'badge' + str(self.id)
 
+    def __str__(self):
+        return self.scholarship_name
+
 '''
 table that contains profile of the user.
 '''
 class Person(models.Model):
     # choices
-    GENDER = (
-        ('E', '-EMPTY-'),
-        ('male', 'Male'),
-        ('female', 'Female'),
-    )
     IITG_STUDENT = (
         ('Y', 'yes'),
         ('N', 'no'),
     )
+    GENDER = (
+        ('E', ''),
+        ('male', 'Male'),
+        ('female', 'Female'),
+    )
+    CITIZEN_INDIA = (
+        ('E', ''),
+        ('Y','Yes'),
+        ('N','No'),
+    )
     CATEGORY = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('gen','General'),
         ('sc','Scheduled Class'),
         ('st','Scheduled Tribe'),
         ('pwd','Person With Disability'),
         ('obc', 'Other Backward Class'),
+        ('NAOT', 'None'),
     )
     EDUCATION = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('l0001', 'Class I'),
         ('l0002', 'Class II'),
         ('l0003', 'Class III'),
@@ -138,14 +147,10 @@ class Person(models.Model):
         ('lpg', 'Post Graduate'),
         ('lmphil', 'M.Phil'),
         ('lphd', 'Ph.D'),
-    )
-    CITIZEN_INDIA = (
-        ('E', '-EMPTY-'),
-        ('Y','Yes'),
-        ('N','No'),
+        ('NAOT', 'None'),
     )
     RELIGION = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('hinduism', 'Hinduism'),
         ('islam', 'Islam'),
         ('christianity', 'Christianity'),
@@ -154,26 +159,30 @@ class Person(models.Model):
         ('jainism', 'Jainism'),
         ('zoroastrianism', 'Zoroastrianism'),
         ('other_religions', 'Others'),
+        ('NAOT', 'None'),
     )
     EXTRA_EDUCATION = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('post_matriculation', 'Post Matriculation'),
         ('diploma_certificates', 'Diploma Certificates'),
         ('bachelors_degree', 'Bachelors Degree'),
         ('diploma_india', 'Diploma India'),
         ('masters_degree', 'Masters Degree'),
+        ('NAOT', 'None'),
     )
     WORKERS = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('beedi', 'Beedi'),
         ('cine', 'Cine'),
         ('iomc', 'IOMC'),
         ('lsdm', 'LSDM'),
+        ('NAOT', 'None'),
     )
     ARMED = (
-        ('E', '-EMPTY-'),
+        ('E', ''),
         ('armed', 'Central Armed Police Forces'),
         ('rifles', 'Assam Rifles'),
+        ('NAOT', 'None'),
     )
 
     # website private data
@@ -190,7 +199,7 @@ class Person(models.Model):
     annual_income = models.PositiveIntegerField(null=True, blank=True)
     monthly_income = models.PositiveIntegerField(null=True, blank=True)
     lump_sum = models.PositiveIntegerField(null=True, blank=True)
-    category = models.CharField(max_length=3, choices=CATEGORY, default='E')
+    category = models.CharField(max_length=4, choices=CATEGORY, default='E')
     education = models.CharField(max_length=6, choices=EDUCATION, default='E')
     extra_education = models.CharField(max_length=20, choices=EXTRA_EDUCATION, default='E')
     current_cpi = models.DecimalField(null=True, decimal_places=2, max_digits=4, blank=True)
@@ -200,6 +209,9 @@ class Person(models.Model):
     religion = models.CharField(max_length=15, choices=RELIGION, default='E')
     workers = models.CharField(max_length=15, choices=WORKERS, default='E')
     armed = models.CharField(max_length=6, choices=ARMED, default='E')
+
+    def __str__(self):
+        return self.person_name + "(" + self.gmail_id + ")"
 
 
 '''

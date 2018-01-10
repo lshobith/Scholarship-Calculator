@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from oauth2client import client, crypt
 from django.db.models import Q
-from .models import Person, PersonForm, Scholarship
-from .forms import WebmailVerifyForm
+from .models import Person, Scholarship
+from .forms import PersonForm, WebmailVerifyForm
 import poplib
 import re
 
@@ -88,8 +88,10 @@ def eligible(request):
         return HttpResponse("Invalid User, Please login again!")
     current_user = Person.objects.get(gmail_id=request.session['userid'])
     marked_scholarship_list = current_user.marked_scholarships.all()
+    scholarship_list = Scholarship.objects.all()
 
     # FILTER START
+    '''
     if current_user.iitg_student == 'N':
         scholarship_list = Scholarship.objects.filter(
             iitg_scholarship = 'N'
@@ -133,6 +135,7 @@ def eligible(request):
         scholarship_list = scholarship_list.filter(Q(minimum_percent__lte = current_user.marks_percentage) | Q(minimum_percent = None))
     if not current_user.disability_percent is None:
         scholarship_list = scholarship_list.filter(Q(minimum_disability_percent__lte = current_user.disability_percent) | Q(minimum_disability_percent = None))
+    '''
     # FILTER END
 
     content = {

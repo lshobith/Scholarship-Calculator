@@ -1,7 +1,4 @@
 from django.db import models
-from django.forms import ModelForm
-from django import forms
-
 
 '''
 table for states in india
@@ -71,14 +68,6 @@ class Scholarship(models.Model):
         ('INDIA', 'India'),
     )
 
-    # fields with relations
-    s_eligible_genders = models.ManyToManyField(Gender)
-    s_eligible_categories = models.ManyToManyField(Category)
-    s_eligible_religions = models.ManyToManyField(Religion)
-    s_eligible_education = models.ManyToManyField(Education)
-    s_eligible_workers = models.ManyToManyField(Worker)
-    s_eligible_states_of_india = models.ManyToManyField(IndiaState)
-
     # scholarship data
     scholarship_name = models.CharField(max_length=1000)
     scholarship_link = models.URLField(blank=True)
@@ -91,60 +80,13 @@ class Scholarship(models.Model):
     minimum_disability_percent = models.PositiveIntegerField(blank=True, null=True)
     eligible_nations = models.CharField(max_length=20, choices=ELIGIBLE_NATIONS, default='ALL')
 
-    male = models.BooleanField(default=True)
-    female = models.BooleanField(default=True)
-
-    # stages of education eligible for scholarship
-    level_l0001 = models.BooleanField(default=False)
-    level_l0002 = models.BooleanField(default=False)
-    level_l0003 = models.BooleanField(default=False)
-    level_l0004 = models.BooleanField(default=False)
-    level_l0005 = models.BooleanField(default=False)
-    level_l0006 = models.BooleanField(default=False)
-    level_l0007 = models.BooleanField(default=False)
-    level_l0008 = models.BooleanField(default=False)
-    level_l0009 = models.BooleanField(default=False)
-    level_l0010 = models.BooleanField(default=False)
-    level_l0011 = models.BooleanField(default=False)
-    level_l0012 = models.BooleanField(default=False)
-    level_lug = models.BooleanField(default=False)
-    level_lpg = models.BooleanField(default=False)
-    level_lmphil = models.BooleanField(default=False)
-    level_lphd = models.BooleanField(default=False)
-
-    # extra
-    level_post_matriculation = models.BooleanField(default=True)
-    level_diploma_certificates = models.BooleanField(default=True)
-    level_bachelors_degree = models.BooleanField(default=True)
-    level_diploma_india = models.BooleanField(default=True)
-    level_masters_degree = models.BooleanField(default=True)
-
-    # religions eligible for scholarship
-    hinduism = models.BooleanField(default=True)
-    islam = models.BooleanField(default=True)
-    christianity = models.BooleanField(default=True)
-    sikhism = models.BooleanField(default=True)
-    buddhism = models.BooleanField(default=True)
-    jainism = models.BooleanField(default=True)
-    zoroastrianism = models.BooleanField(default=True)
-    other_religions = models.BooleanField(default=True)
-
-    # category
-    gen = models.BooleanField(default=True)
-    sc = models.BooleanField(default=True)
-    st = models.BooleanField(default=True)
-    pwd = models.BooleanField(default=True)
-    obc = models.BooleanField(default=True)
-
-    # workers
-    beedi = models.BooleanField(default=True)
-    cine = models.BooleanField(default=True)
-    iomc = models.BooleanField(default=True)
-    lsdm = models.BooleanField(default=True)
-
-    # armed
-    armed = models.BooleanField(default=True)
-    rifles = models.BooleanField(default=True)
+    # fields with relations
+    s_eligible_genders = models.ManyToManyField(Gender)
+    s_eligible_categories = models.ManyToManyField(Category)
+    s_eligible_religions = models.ManyToManyField(Religion)
+    s_eligible_education = models.ManyToManyField(Education)
+    s_eligible_workers = models.ManyToManyField(Worker)
+    s_eligible_states_of_india = models.ManyToManyField(IndiaState)
 
     data_about = models.TextField(blank=True)
 
@@ -282,36 +224,3 @@ class Person(models.Model):
 
     def __str__(self):
         return "[" + self.person_name + "] " + self.gmail_id
-
-
-'''
-form for Person class.
-this is not a database.
-this form is used for editing the database.
-'''
-class PersonForm(ModelForm):
-    class Meta:
-        # the model form is based on Person.
-        model = Person
-
-        # Should not contain 'IITG_student', 'gmail_id' and 'marked_scholarships'.
-        fields = ['person_name', 'birth_date', 'gender', 'annual_income', 'monthly_income', 'lump_sum', 'category', 'education', 'extra_education', 'current_cpi', 'marks_percentage', 'disability_percent', 'citizen_india', 'religion', 'workers', 'armed']
-
-        widgets = {
-            'person_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Name'}),
-            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD'}),
-            'gender': forms.Select(attrs={'class': 'form-control'}),
-            'annual_income': forms.NumberInput(attrs={'class': 'form-control'}),
-            'monthly_income': forms.NumberInput(attrs={'class': 'form-control'}),
-            'lump_sum': forms.NumberInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
-            'education': forms.Select(attrs={'class': 'form-control'}),
-            'extra_education': forms.Select(attrs={'class': 'form-control'}),
-            'current_cpi': forms.NumberInput(attrs={'class': 'form-control'}),
-            'citizen_india': forms.Select(attrs={'class': 'form-control'}),
-            'religion': forms.Select(attrs={'class': 'form-control'}),
-            'workers': forms.Select(attrs={'class': 'form-control'}),
-            'armed': forms.Select(attrs={'class': 'form-control'}),
-            'marks_percentage': forms.NumberInput(attrs={'class': 'form-control'}),
-            'disability_percent': forms.NumberInput(attrs={'class': 'form-control'}),
-        }

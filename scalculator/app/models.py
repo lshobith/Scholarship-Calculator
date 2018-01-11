@@ -114,79 +114,10 @@ class Person(models.Model):
         ('Y', 'yes'),
         ('N', 'no'),
     )
-    GENDER = (
-        ('E', ''),
-        ('male', 'Male'),
-        ('female', 'Female'),
-    )
     CITIZEN_INDIA = (
         ('E', ''),
         ('Y','Yes'),
         ('N','No'),
-    )
-    CATEGORY = (
-        ('E', ''),
-        ('gen','General'),
-        ('sc','Scheduled Class'),
-        ('st','Scheduled Tribe'),
-        ('pwd','Person With Disability'),
-        ('obc', 'Other Backward Class'),
-        ('NAOT', 'None'),
-    )
-    EDUCATION = (
-        ('E', ''),
-        ('l0001', 'Class I'),
-        ('l0002', 'Class II'),
-        ('l0003', 'Class III'),
-        ('l0004', 'Class IV'),
-        ('l0005', 'Class V'),
-        ('l0006', 'Class VI'),
-        ('l0007', 'Class VII'),
-        ('l0008', 'Class VIII'),
-        ('l0009', 'Class IX'),
-        ('l0010', 'Class X'),
-        ('l0011', 'Class XI'),
-        ('l0012', 'Class XII'),
-        ('lug', 'Under Graduate'),
-        ('lpg', 'Post Graduate'),
-        ('lmphil', 'M.Phil'),
-        ('lphd', 'Ph.D'),
-        ('NAOT', 'None'),
-    )
-    RELIGION = (
-        ('E', ''),
-        ('hinduism', 'Hinduism'),
-        ('islam', 'Islam'),
-        ('christianity', 'Christianity'),
-        ('sikhism', 'Sikhism'),
-        ('buddhism', 'Buddhism'),
-        ('jainism', 'Jainism'),
-        ('zoroastrianism', 'Zoroastrianism'),
-        ('other_religions', 'Others'),
-        ('NAOT', 'None'),
-    )
-    EXTRA_EDUCATION = (
-        ('E', ''),
-        ('post_matriculation', 'Post Matriculation'),
-        ('diploma_certificates', 'Diploma Certificates'),
-        ('bachelors_degree', 'Bachelors Degree'),
-        ('diploma_india', 'Diploma India'),
-        ('masters_degree', 'Masters Degree'),
-        ('NAOT', 'None'),
-    )
-    WORKERS = (
-        ('E', ''),
-        ('beedi', 'Beedi'),
-        ('cine', 'Cine'),
-        ('iomc', 'IOMC'),
-        ('lsdm', 'LSDM'),
-        ('NAOT', 'None'),
-    )
-    ARMED = (
-        ('E', ''),
-        ('armed', 'Central Armed Police Forces'),
-        ('rifles', 'Assam Rifles'),
-        ('NAOT', 'None'),
     )
 
     # website private data
@@ -207,20 +138,14 @@ class Person(models.Model):
     # user data
     person_name = models.CharField(max_length=100, blank=True, default='')
     birth_date = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=6, choices=GENDER, default='E')
     annual_income = models.PositiveIntegerField(null=True, blank=True)
     monthly_income = models.PositiveIntegerField(null=True, blank=True)
     lump_sum = models.PositiveIntegerField(null=True, blank=True)
-    category = models.CharField(max_length=4, choices=CATEGORY, default='E')
-    education = models.CharField(max_length=6, choices=EDUCATION, default='E')
-    extra_education = models.CharField(max_length=20, choices=EXTRA_EDUCATION, default='E')
     current_cpi = models.DecimalField(null=True, decimal_places=2, max_digits=4, blank=True)
     marks_percentage = models.PositiveIntegerField(null=True, blank=True)
+    is_disabled = models.BooleanField(default=False)
     disability_percent = models.PositiveIntegerField(null=True, blank=True)
     citizen_india = models.CharField(max_length=1, choices=CITIZEN_INDIA, default='E')
-    religion = models.CharField(max_length=15, choices=RELIGION, default='E')
-    workers = models.CharField(max_length=15, choices=WORKERS, default='E')
-    armed = models.CharField(max_length=6, choices=ARMED, default='E')
 
     def __str__(self):
         return "[" + self.person_name + "] " + self.gmail_id

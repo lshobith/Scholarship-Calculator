@@ -73,6 +73,13 @@
                 </div>
             </div>
             <div class="form-group">
+                {{ form.is_disabled.errors }}
+                <label for="{{ form.is_disabled.id_for_label }}" class="control-label col-sm-2">Disabled</label>
+                <div class="col-sm-2">
+                    {{ form.is_disabled }}
+                </div>
+            </div>
+            <div class="form-group">
                 {{ form.disability_percent.errors }}
                 <label for="{{ form.disability_percent.id_for_label }}" class="control-label col-sm-2">Disability Percent</label>
                 <div class="col-sm-2">
